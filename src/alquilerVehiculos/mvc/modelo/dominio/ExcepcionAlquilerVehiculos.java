@@ -13,7 +13,8 @@ public class ExcepcionAlquilerVehiculos extends RuntimeException {
 	/**
 	 * Instantiates a new excepcion alquiler vehiculos.
 	 *
-	 * @param mensaje the mensaje
+	 * @param mensaje
+	 *            the mensaje
 	 */
 	public ExcepcionAlquilerVehiculos(String mensaje) {
 

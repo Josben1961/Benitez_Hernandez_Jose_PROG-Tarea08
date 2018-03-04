@@ -11,8 +11,9 @@ import java.util.regex.Pattern;
 /**
  * The Class DireccionPostal.
  */
-public class DireccionPostal implements Serializable{
+public class DireccionPostal implements Serializable {
 
+	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 
 	/** The calle. */
@@ -134,7 +135,9 @@ public class DireccionPostal implements Serializable{
 		return emparejador.matches();
 	}
 
-	/* (sin Javadoc)
+	/*
+	 * (sin Javadoc)
+	 * 
 	 * @see java.lang.Object#toString()
 	 */
 	/*

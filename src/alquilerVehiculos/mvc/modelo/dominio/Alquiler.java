@@ -14,33 +14,35 @@ public class Alquiler implements Serializable {
 
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
-	
+
 	/** The cliente. */
 	private Cliente cliente;
-	
+
 	/** The vehiculo. */
 	private Vehiculo vehiculo;
-	
+
 	/** The fecha. */
 	private Date fecha;
-	
+
 	/** The dias. */
 	private int dias;
-	
+
 	/** The formato fecha. */
 	private final SimpleDateFormat FORMATO_FECHA = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-	
+
 	/** The ms dia. */
 	private final int MS_DIA = 1000 * 60 * 60 * 24;
-	
+
 	/** The precio dia. */
 	private final double PRECIO_DIA = 30.0;
 
 	/**
 	 * Instantiates a new alquiler.
 	 *
-	 * @param cliente the cliente
-	 * @param vehiculo the vehiculo
+	 * @param cliente
+	 *            the cliente
+	 * @param vehiculo
+	 *            the vehiculo
 	 */
 	// Constructor con dos parámetros
 	public Alquiler(Cliente cliente, Vehiculo vehiculo) {
@@ -54,7 +56,8 @@ public class Alquiler implements Serializable {
 	/**
 	 * Sets the cliente.
 	 *
-	 * @param cliente the new cliente
+	 * @param cliente
+	 *            the new cliente
 	 */
 	private void setCliente(Cliente cliente) {
 		if (cliente != null)
@@ -66,7 +69,8 @@ public class Alquiler implements Serializable {
 	/**
 	 * Sets the vehiculo.
 	 *
-	 * @param vehiculo the new vehiculo
+	 * @param vehiculo
+	 *            the new vehiculo
 	 */
 	private void setVehiculo(Vehiculo vehiculo) {
 		if (vehiculo != null)
@@ -146,8 +150,10 @@ public class Alquiler implements Serializable {
 	/**
 	 * Dif dias.
 	 *
-	 * @param fechaFin the fecha fin
-	 * @param fechaInicio the fecha inicio
+	 * @param fechaFin
+	 *            the fecha fin
+	 * @param fechaInicio
+	 *            the fecha inicio
 	 * @return the int
 	 */
 	private int difDias(Date fechaFin, Date fechaInicio) {
@@ -156,13 +162,39 @@ public class Alquiler implements Serializable {
 		return (int) dias + 1;
 	}
 
-	/* (sin Javadoc)
+	/*
+	 * (sin Javadoc)
+	 * 
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
 	public String toString() {
 		return "Alquiler [Cliente = " + getCliente() + " Vehiculo = " + getVehiculo() + " Fecha = "
 				+ FORMATO_FECHA.format(fecha) + ", Dias = " + getDias() + ", Precio = " + getPrecio() + "]\n\n";
+	}
+
+	/*
+	 * (sin Javadoc)
+	 * 
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object otro) {
+		if (otro == null || !(otro instanceof Alquiler))
+			return false;
+		if (otro == this)
+			return true;
+		return (vehiculo.getMatricula().equals(((Alquiler) otro).getVehiculo().getMatricula()));
+	}
+
+	/*
+	 * (sin Javadoc)
+	 * 
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		return vehiculo.getMatricula().hashCode();
 	}
 
 }

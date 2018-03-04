@@ -18,21 +18,43 @@ import alquilerVehiculos.mvc.modelo.dominio.ExcepcionAlquilerVehiculos;
 import alquilerVehiculos.mvc.modelo.dominio.vehiculo.TipoVehiculo;
 import alquilerVehiculos.mvc.modelo.dominio.vehiculo.Vehiculo;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class Vehiculos.
+ */
 public class Vehiculos {
 
+	/** The vehiculos. */
 	private Map<String, Vehiculo> vehiculos;
+
+	/** The fichero vehiculos. */
 	private final String FICHERO_VEHICULOS = "datos/vehiculos.dat";
+
+	/** The vehiculo. */
 	private Vehiculo vehiculo;
+
+	/** The tipo vehiculo. */
 	private TipoVehiculo tipoVehiculo;
 
+	/**
+	 * Instantiates a new vehiculos.
+	 */
 	public Vehiculos() {
 		vehiculos = new HashMap<String, Vehiculo>();
 	}
 
+	/**
+	 * Gets the vehiculos.
+	 *
+	 * @return the vehiculos
+	 */
 	public List<Vehiculo> getVehiculos() {
 		return new Vector<Vehiculo>(vehiculos.values());
 	}
 
+	/**
+	 * Leer vehiculos.
+	 */
 	public void leerVehiculos() {
 		File fichero = new File(FICHERO_VEHICULOS);
 		ObjectInputStream entrada;
@@ -43,10 +65,10 @@ public class Vehiculos {
 					Vehiculo vehiculo = (Vehiculo) entrada.readObject();
 					vehiculos.put(vehiculo.getMatricula(), vehiculo);
 				}
-				
+
 			} catch (EOFException eo) {
 				entrada.close();
-				System.out.println("Fichero vehículos leído satisfactoriamente.");	
+				System.out.println("Fichero vehículos leído satisfactoriamente.");
 			} catch (ClassNotFoundException e) {
 				System.out.println("Imposible encontrar el archivo que tengo que leer.");
 			} catch (IOException e) {
@@ -57,6 +79,9 @@ public class Vehiculos {
 		}
 	}
 
+	/**
+	 * Escribir vehiculos.
+	 */
 	public void escribirVehiculos() {
 		File fichero = new File(FICHERO_VEHICULOS);
 		try {
@@ -72,26 +97,46 @@ public class Vehiculos {
 		}
 	}
 
+	/**
+	 * Anadir vehiculo.
+	 *
+	 * @param vehiculo
+	 *            the vehiculo
+	 * @param tipoVehiculo
+	 *            the tipo vehiculo
+	 */
 	public void anadirVehiculo(Vehiculo vehiculo, TipoVehiculo tipoVehiculo) {
 		if (vehiculos.containsKey(vehiculo.getMatricula()))
 			throw new ExcepcionAlquilerVehiculos("Ya existe un vehículo con esa matríucula");
 		else
 			vehiculos.put(vehiculo.getMatricula(), vehiculo);
-			vehiculo.setDisponible(true);
+		vehiculo.setDisponible(true);
 	}
 
+	/**
+	 * Borrar vehiculo.
+	 *
+	 * @param matricula
+	 *            the matricula
+	 */
 	public void borrarVehiculo(String matricula) {
-		if (vehiculos.containsKey(matricula)) 
+		if (vehiculos.containsKey(matricula))
 			vehiculos.remove(matricula);
-		else 
+		else
 			throw new ExcepcionAlquilerVehiculos("El vehículo a borrar no existe");
 	}
 
+	/**
+	 * Buscar vehiculo.
+	 *
+	 * @param matricula
+	 *            the matricula
+	 * @return the vehiculo
+	 */
 	public Vehiculo buscarVehiculo(String matricula) {
-		if (vehiculos.containsKey(matricula)) 
-			return tipoVehiculo.getInstancia(vehiculo.getMatricula(), vehiculo.getMarca(),
-					vehiculo.getModelo(), vehiculo.getDatosTecnicos());
-		else 
+		if (vehiculos.containsKey(matricula))
+			return vehiculos.get(matricula);
+		else
 			throw new ExcepcionAlquilerVehiculos("El vehículo a borrar no existe");
 	}
 }

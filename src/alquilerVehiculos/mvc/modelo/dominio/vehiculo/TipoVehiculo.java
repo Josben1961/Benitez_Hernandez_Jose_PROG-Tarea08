@@ -45,7 +45,8 @@ public enum TipoVehiculo {
 	/**
 	 * Instantiates a new tipo vehiculo.
 	 *
-	 * @param tipo the tipo
+	 * @param tipo
+	 *            the tipo
 	 */
 	private TipoVehiculo(String tipo) {
 		this.tipo = tipo;
@@ -54,18 +55,24 @@ public enum TipoVehiculo {
 	/**
 	 * Gets the instancia.
 	 *
-	 * @param matricula the matricula
-	 * @param marca the marca
-	 * @param modelo the modelo
-	 * @param datosTecnicos the datos tecnicos
+	 * @param matricula
+	 *            the matricula
+	 * @param marca
+	 *            the marca
+	 * @param modelo
+	 *            the modelo
+	 * @param datosTecnicos
+	 *            the datos tecnicos
 	 * @return the instancia
 	 */
-	public abstract Vehiculo getInstancia(String matricula, String marca, String modelo, DatosTecnicosVehiculo datosTecnicos);
+	public abstract Vehiculo getInstancia(String matricula, String marca, String modelo,
+			DatosTecnicosVehiculo datosTecnicos);
 
 	/**
 	 * Gets the tipo vehiculo segun ordinal.
 	 *
-	 * @param ordinal the ordinal
+	 * @param ordinal
+	 *            the ordinal
 	 * @return the tipo vehiculo segun ordinal
 	 */
 	public static TipoVehiculo getTipoVehiculoSegunOrdinal(int ordinal) {
@@ -78,14 +85,17 @@ public enum TipoVehiculo {
 	/**
 	 * Es ordinal valido.
 	 *
-	 * @param ordinal the ordinal
+	 * @param ordinal
+	 *            the ordinal
 	 * @return true, if successful
 	 */
 	public static boolean esOrdinalValido(int ordinal) {
 		return (ordinal >= 0 && ordinal <= values().length - 1) ? true : false;
 	}
 
-	/* (sin Javadoc)
+	/*
+	 * (sin Javadoc)
+	 * 
 	 * @see java.lang.Enum#toString()
 	 */
 	public String toString() {

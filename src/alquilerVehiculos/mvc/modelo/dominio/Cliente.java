@@ -10,31 +10,34 @@ import java.util.regex.Pattern;
  * The Class Cliente.
  */
 public class Cliente implements Serializable {
-	
+
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
-	
+
 	/** The nombre. */
 	private String nombre;
-	
+
 	/** The dni. */
 	private String dni;
-	
+
 	/** The direccion postal. */
 	private DireccionPostal direccionPostal;
-	
+
 	/** The identificador. */
 	private int identificador;
-	
+
 	/** The ultimo identificador. */
 	private static int ultimoIdentificador = 0;
 
 	/**
 	 * Instantiates a new cliente.
 	 *
-	 * @param nombre the nombre
-	 * @param dni the dni
-	 * @param direccionPostal the direccion postal
+	 * @param nombre
+	 *            the nombre
+	 * @param dni
+	 *            the dni
+	 * @param direccionPostal
+	 *            the direccion postal
 	 */
 	// Constructor con los 5 par�metros
 	public Cliente(String nombre, String dni, DireccionPostal direccionPostal) {
@@ -48,7 +51,8 @@ public class Cliente implements Serializable {
 	/**
 	 * Sets the nombre.
 	 *
-	 * @param nombre the new nombre
+	 * @param nombre
+	 *            the new nombre
 	 */
 	private void setNombre(String nombre) {
 		if (nombre != null && !nombre.equals(""))
@@ -60,7 +64,8 @@ public class Cliente implements Serializable {
 	/**
 	 * Sets the dni.
 	 *
-	 * @param dni the new dni
+	 * @param dni
+	 *            the new dni
 	 */
 	private void setDni(String dni) {
 		if (compruebaDni(dni))
@@ -72,7 +77,8 @@ public class Cliente implements Serializable {
 	/**
 	 * Sets the direccion postal.
 	 *
-	 * @param direccionPostal the new direccion postal
+	 * @param direccionPostal
+	 *            the new direccion postal
 	 */
 	public void setDireccionPostal(DireccionPostal direccionPostal) {
 		this.direccionPostal = new DireccionPostal(direccionPostal);
@@ -81,7 +87,8 @@ public class Cliente implements Serializable {
 	/**
 	 * Instantiates a new cliente.
 	 *
-	 * @param cliente the cliente
+	 * @param cliente
+	 *            the cliente
 	 */
 	public Cliente(Cliente cliente) {
 		nombre = cliente.getNombre();
@@ -102,7 +109,8 @@ public class Cliente implements Serializable {
 	/**
 	 * Aumentar ultimo identificador.
 	 *
-	 * @param cantidad the cantidad
+	 * @param cantidad
+	 *            the cantidad
 	 */
 	public static void aumentarUltimoIdentificador(int cantidad) {
 		if (cantidad > 0)
@@ -150,9 +158,11 @@ public class Cliente implements Serializable {
 	/**
 	 * Comprueba dni.
 	 *
-	 * @param dni the dni
+	 * @param dni
+	 *            the dni
 	 * @return true, if successful
-	 * @throws ExcepcionAlquilerVehiculos the excepcion alquiler vehiculos
+	 * @throws ExcepcionAlquilerVehiculos
+	 *             the excepcion alquiler vehiculos
 	 */
 	// Método para comprobar el DNI introducido
 	private boolean compruebaDni(String dni) throws ExcepcionAlquilerVehiculos {
@@ -165,25 +175,37 @@ public class Cliente implements Serializable {
 	}
 	// Método toString que representa al cliente
 
-	/* (sin Javadoc)
+	/*
+	 * (sin Javadoc)
+	 * 
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
 	public String toString() {
 		return String.format("Identificador: %d Nombre: %s DNI: %s %s %n", identificador, nombre, dni, direccionPostal);
 	}
-	
+
+	/*
+	 * (sin Javadoc)
+	 * 
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
 	@Override
 	public boolean equals(Object otro) {
-		if (otro == null || !(otro instanceof Cliente)) 
+		if (otro == null || !(otro instanceof Cliente))
 			return false;
-	    if (otro == this) 
-	    	return true;
-	    return (dni.equals(((Cliente) otro).getDni()));
+		if (otro == this)
+			return true;
+		return (dni.equals(((Cliente) otro).getDni()));
 	}
-	
+
+	/*
+	 * (sin Javadoc)
+	 * 
+	 * @see java.lang.Object#hashCode()
+	 */
 	@Override
-    public int hashCode() {
+	public int hashCode() {
 		return dni.hashCode();
 	}
 }

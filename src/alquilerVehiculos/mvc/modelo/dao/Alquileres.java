@@ -16,20 +16,37 @@ import alquilerVehiculos.mvc.modelo.dominio.Cliente;
 import alquilerVehiculos.mvc.modelo.dominio.ExcepcionAlquilerVehiculos;
 import alquilerVehiculos.mvc.modelo.dominio.vehiculo.Vehiculo;
 
-
+// TODO: Auto-generated Javadoc
+/**
+ * The Class Alquileres.
+ */
 public class Alquileres {
 
+	/** The alquileres. */
 	private List<Alquiler> alquileres;
+
+	/** The fichero alquileres. */
 	private final String FICHERO_ALQUILERES = "datos/alquileres.dat";
-	
+
+	/**
+	 * Instantiates a new alquileres.
+	 */
 	public Alquileres() {
 		alquileres = new Vector<Alquiler>();
 	}
-	
+
+	/**
+	 * Gets the alquileres.
+	 *
+	 * @return the alquileres
+	 */
 	public List<Alquiler> getAlquileres() {
 		return new Vector<Alquiler>(alquileres);
 	}
-	
+
+	/**
+	 * Leer alquileres.
+	 */
 	public void leerAlquileres() {
 		File fichero = new File(FICHERO_ALQUILERES);
 		ObjectInputStream entrada;
@@ -40,10 +57,10 @@ public class Alquileres {
 					Alquiler alquiler = (Alquiler) entrada.readObject();
 					alquileres.add(alquiler);
 				}
-				
+
 			} catch (EOFException eo) {
 				entrada.close();
-				System.out.println("Fichero trabajos leído satisfactoriamente.");	
+				System.out.println("Fichero trabajos leído satisfactoriamente.");
 			} catch (ClassNotFoundException e) {
 				System.out.println("No puedo encontrar la clase que tengo que leer.");
 			} catch (IOException e) {
@@ -54,6 +71,9 @@ public class Alquileres {
 		}
 	}
 
+	/**
+	 * Escribir alquileres.
+	 */
 	public void escribirAlquileres() {
 		File fichero = new File(FICHERO_ALQUILERES);
 		try {
@@ -69,26 +89,57 @@ public class Alquileres {
 		}
 	}
 
+	/**
+	 * Abrir alquiler.
+	 *
+	 * @param cliente
+	 *            the cliente
+	 * @param vehiculo
+	 *            the vehiculo
+	 */
 	public void abrirAlquiler(Cliente cliente, Vehiculo vehiculo) {
 		compruebaExistenciaOtroAbierto(cliente, vehiculo);
-		 alquileres.add(new Alquiler (cliente, vehiculo));
+		alquileres.add(new Alquiler(cliente, vehiculo));
 	}
 
+	/**
+	 * Comprueba existencia otro abierto.
+	 *
+	 * @param cliente
+	 *            the cliente
+	 * @param vehiculo
+	 *            the vehiculo
+	 */
 	private void compruebaExistenciaOtroAbierto(Cliente cliente, Vehiculo vehiculo) {
 		int indice = 0;
 		while (indiceNoSuperaTamano(indice)) {
-			if (alquileres.get(indice).getVehiculo().getMatricula().equals(vehiculo.getMatricula()) && 
-					alquileres.get(indice).getDias()==0)
+			if (alquileres.get(indice).getVehiculo().getMatricula().equals(vehiculo.getMatricula())
+					&& alquileres.get(indice).getDias() == 0)
 				throw new ExcepcionAlquilerVehiculos("Ya existe un trabajo abierto para este vehículo");
 			else
 				indice++;
 		}
 	}
 
+	/**
+	 * Indice no supera tamano.
+	 *
+	 * @param indice
+	 *            the indice
+	 * @return true, if successful
+	 */
 	private boolean indiceNoSuperaTamano(int indice) {
 		return indice < alquileres.size();
 	}
 
+	/**
+	 * Cerrar alquiler.
+	 *
+	 * @param cliente
+	 *            the cliente
+	 * @param vehiculo
+	 *            the vehiculo
+	 */
 	public void cerrarAlquiler(Cliente cliente, Vehiculo vehiculo) {
 		int indice = buscarAlquilerAbierto(cliente, vehiculo);
 		if (indiceNoSuperaTamano(indice)) {
@@ -99,59 +150,87 @@ public class Alquileres {
 		}
 	}
 
+	/**
+	 * Buscar alquiler abierto.
+	 *
+	 * @param cliente
+	 *            the cliente
+	 * @param vehiculo
+	 *            the vehiculo
+	 * @return the int
+	 */
 	private int buscarAlquilerAbierto(Cliente cliente, Vehiculo vehiculo) {
 		int indice = 0;
 		boolean alquilerEncontrado = false;
 		while (indiceNoSuperaTamano(indice) && !alquilerEncontrado) {
-			if (alquileres.get(indice).getVehiculo().getMatricula().equals(vehiculo.getMatricula()) &&
-					alquileres.get(indice).getDias()!=0)
+			if (alquileres.get(indice).getVehiculo().getMatricula().equals(vehiculo.getMatricula())
+					&& alquileres.get(indice).getDias() == 0)
 				alquilerEncontrado = true;
 			else
 				indice++;
 		}
 		return alquilerEncontrado ? indice : alquileres.size();
 	}
-	
-	 public List<Alquiler> obtenerAlquileresAbiertos() {
-	        int posicion = 0;
-	        List<Alquiler> alquileresAbiertos = new Vector<Alquiler>();
 
-	        while (posicion < alquileres.size()) {
-	            if (alquileres.get(posicion).getDias() == 0) {
-	                alquileresAbiertos.add(alquileres.get(posicion));
-	            }
-	            posicion++;
-	        }
-	        return alquileresAbiertos;
+	/**
+	 * Obtener alquileres abiertos.
+	 *
+	 * @return the list
+	 */
+	public List<Alquiler> obtenerAlquileresAbiertos() {
+		int posicion = 0;
+		List<Alquiler> alquileresAbiertos = new Vector<Alquiler>();
 
-	    }
-	 public List<Alquiler> obtenerAlquileresCliente(String dni) {
-	        int posicion = 0;
-	        List<Alquiler> alquileresCliente = new Vector<Alquiler>();
-
-	        while (posicion < alquileres.size()) {
-	            if (alquileres.get(posicion).getCliente().getDni().equals(dni)) {
-	                alquileresCliente.add(alquileres.get(posicion));
-	            }
-	            posicion++;
-	        }
-	        return alquileresCliente;
-
-	    }
-	 
-	 public List<Alquiler> obtenerAlquileresVehiculo(String matricula) {
-	        int posicion = 0;
-	        List<Alquiler> alquileresVehiculo = new Vector<Alquiler>();
-
-	        while (posicion < alquileres.size()) {
-	            if (alquileres.get(posicion).getVehiculo().getMatricula().equals(matricula)) {
-	                alquileresVehiculo.add(alquileres.get(posicion));
-	            }
-	            posicion++;
-	        }
-	        return alquileresVehiculo;
+		while (posicion < alquileres.size()) {
+			if (alquileres.get(posicion).getDias() == 0) {
+				alquileresAbiertos.add(alquileres.get(posicion));
+			}
+			posicion++;
+		}
+		return alquileresAbiertos;
 
 	}
 
+	/**
+	 * Obtener alquileres cliente.
+	 *
+	 * @param dni
+	 *            the dni
+	 * @return the list
+	 */
+	public List<Alquiler> obtenerAlquileresCliente(String dni) {
+		int posicion = 0;
+		List<Alquiler> alquileresCliente = new Vector<Alquiler>();
+
+		while (posicion < alquileres.size()) {
+			if (alquileres.get(posicion).getCliente().getDni().equals(dni)) {
+				alquileresCliente.add(alquileres.get(posicion));
+			}
+			posicion++;
+		}
+		return alquileresCliente;
+
+	}
+
+	/**
+	 * Obtener alquileres vehiculo.
+	 *
+	 * @param matricula
+	 *            the matricula
+	 * @return the list
+	 */
+	public List<Alquiler> obtenerAlquileresVehiculo(String matricula) {
+		int posicion = 0;
+		List<Alquiler> alquileresVehiculo = new Vector<Alquiler>();
+
+		while (posicion < alquileres.size()) {
+			if (alquileres.get(posicion).getVehiculo().getMatricula().equals(matricula)) {
+				alquileresVehiculo.add(alquileres.get(posicion));
+			}
+			posicion++;
+		}
+		return alquileresVehiculo;
+
+	}
 
 }

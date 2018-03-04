@@ -2,6 +2,7 @@
  * 
  */
 package alquilerVehiculos.mvc.modelo.dominio.vehiculo;
+
 import java.io.Serializable;
 import alquilerVehiculos.mvc.modelo.dominio.ExcepcionAlquilerVehiculos;
 
@@ -11,16 +12,22 @@ import alquilerVehiculos.mvc.modelo.dominio.ExcepcionAlquilerVehiculos;
  */
 public class DatosTecnicosVehiculo implements Serializable {
 
+	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 	/** Atributos. */
 	private int cilindrada;
+
+	/** The numero plazas. */
 	private int numeroPlazas;
+
+	/** The pma. */
 	private int pma;
 
 	/**
 	 * Instancia de nuevo datos técnicos vehículo.
 	 *
-	 * @param datosTecnicos the datos tecnicos
+	 * @param datosTecnicos
+	 *            the datos tecnicos
 	 */
 	public DatosTecnicosVehiculo(DatosTecnicosVehiculo datosTecnicos) {
 		cilindrada = datosTecnicos.getCilindrada();
@@ -31,9 +38,12 @@ public class DatosTecnicosVehiculo implements Serializable {
 	/**
 	 * Instantiates a new datos tecnicos vehiculo.
 	 *
-	 * @param cilindrada the cilindrada
-	 * @param numeroPlazas the numero plazas
-	 * @param pma the pma
+	 * @param cilindrada
+	 *            the cilindrada
+	 * @param numeroPlazas
+	 *            the numero plazas
+	 * @param pma
+	 *            the pma
 	 */
 	public DatosTecnicosVehiculo(int cilindrada, int numeroPlazas, int pma) {
 
@@ -54,7 +64,8 @@ public class DatosTecnicosVehiculo implements Serializable {
 	/**
 	 * Sets the cilindrada.
 	 *
-	 * @param cilindrada the new cilindrada
+	 * @param cilindrada
+	 *            the new cilindrada
 	 */
 	private void setCilindrada(int cilindrada) {
 		if (cilindrada > 0)
@@ -75,7 +86,8 @@ public class DatosTecnicosVehiculo implements Serializable {
 	/**
 	 * Sets the numero plazas.
 	 *
-	 * @param numeroPlazas the new numero plazas
+	 * @param numeroPlazas
+	 *            the new numero plazas
 	 */
 	public void setNumeroPlazas(int numeroPlazas) {
 		this.numeroPlazas = numeroPlazas;
@@ -93,12 +105,18 @@ public class DatosTecnicosVehiculo implements Serializable {
 	/**
 	 * Sets the pma.
 	 *
-	 * @param pma the new pma
+	 * @param pma
+	 *            the new pma
 	 */
 	public void setPma(int pma) {
 		this.pma = pma;
 	}
 
+	/*
+	 * (sin Javadoc)
+	 * 
+	 * @see java.lang.Object#toString()
+	 */
 	/*
 	 * @see java.lang.Object#toString()
 	 */

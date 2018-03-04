@@ -9,17 +9,21 @@ public class Turismo extends Vehiculo {
 
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
-	
+
 	/** The factor turismo. */
 	private double factorTurismo = 0.0;
 
 	/**
 	 * Instantiates a new turismo.
 	 *
-	 * @param matricula the matricula
-	 * @param marca the marca
-	 * @param modelo the modelo
-	 * @param datosTecnicos the datos tecnicos
+	 * @param matricula
+	 *            the matricula
+	 * @param marca
+	 *            the marca
+	 * @param modelo
+	 *            the modelo
+	 * @param datosTecnicos
+	 *            the datos tecnicos
 	 */
 	public Turismo(String matricula, String marca, String modelo, DatosTecnicosVehiculo datosTecnicos) {
 		super(matricula, marca, modelo, datosTecnicos);
@@ -28,13 +32,16 @@ public class Turismo extends Vehiculo {
 	/**
 	 * Instantiates a new turismo.
 	 *
-	 * @param turismo the turismo
+	 * @param turismo
+	 *            the turismo
 	 */
 	public Turismo(Turismo turismo) {
 		super(turismo);
 	}
 
-	/* (sin Javadoc)
+	/*
+	 * (sin Javadoc)
+	 * 
 	 * @see alquilerVehiculos.mvc.modelo.dominio.vehiculo.Vehiculo#getTipoVehiculo()
 	 */
 	public TipoVehiculo getTipoVehiculo() {
@@ -42,11 +49,14 @@ public class Turismo extends Vehiculo {
 		return TipoVehiculo.TURISMO;
 	}
 
-	/* (sin Javadoc)
-	 * @see alquilerVehiculos.mvc.modelo.dominio.vehiculo.Vehiculo#precioEspecifico()
+	/*
+	 * (sin Javadoc)
+	 * 
+	 * @see
+	 * alquilerVehiculos.mvc.modelo.dominio.vehiculo.Vehiculo#precioEspecifico()
 	 */
 	public double precioEspecifico() {
-		factorTurismo= datosTecnicos.getCilindrada()/50;
+		factorTurismo = datosTecnicos.getCilindrada() / 50;
 		return factorTurismo;
 	}
 }
