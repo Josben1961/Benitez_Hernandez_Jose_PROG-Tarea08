@@ -27,18 +27,23 @@ public interface IControladorAlquilerVehiculos {
 	void borrarVehiculo(String matricula);
 
 	Vehiculo buscarVehiculo(String matricula);
-
+	
 	List<Vehiculo> obtenerVehiculos();
+	
+	void abrirAlquiler(Cliente cliente, Vehiculo vehiculo);
 
-	void abrirAlquiler( Cliente cliente, Vehiculo vehiculo);
-
-	void cerrarAlquiler( Cliente cliente, Vehiculo vehiculo);
+	void cerrarAlquiler(Cliente cliente, Vehiculo vehiculo);
 
 	List<Alquiler> obtenerAlquileres();
 
 	List<Alquiler> obtenerAlquileresAbiertos();
 
 	List<Alquiler> obtenerAlquileresCliente(String dni);
+
+	List<Alquiler> obtenerAlquileresVehiculo(String matricula);
+
+	
+
 
 
 }

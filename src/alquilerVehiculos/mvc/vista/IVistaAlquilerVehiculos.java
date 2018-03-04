@@ -37,4 +37,6 @@ public interface IVistaAlquilerVehiculos {
 
 	void obtenerAlquileresCliente();
 
+	void obtenerAlquileresVehiculo();
+
 }

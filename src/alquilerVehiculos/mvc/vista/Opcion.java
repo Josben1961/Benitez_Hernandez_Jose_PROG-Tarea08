@@ -88,8 +88,13 @@ public enum Opcion {
     		vista.obtenerAlquileresCliente();
     	}
     
-    };
-
+    },
+    
+    LISTAR_ALQUILERES_VEHICULO("Listar alquileres por Vehículo"){ 
+    	public void ejecutar() {
+    		vista.obtenerAlquileresCliente();
+    	}
+    };	
 	private String mensaje;
 
 	private static IVistaAlquilerVehiculos vista;
