@@ -81,4 +81,6 @@ public interface IVistaAlquilerVehiculos {
 	 */
 	void listarAlquileres();
 
+	void obtenerAlquileresAbiertos();
+
 }

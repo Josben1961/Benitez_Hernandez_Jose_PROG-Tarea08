@@ -26,13 +26,13 @@ public interface IModeloAlquilerVehiculos {
 
 	Vehiculo buscarVehiculo(String matricula);
 
-	Vehiculo[] obtenerVehiculos();
+	List<Vehiculo> obtenerVehiculos();
 
 	void abrirAlquiler(Cliente cliente, Vehiculo vehiculo);
 
 	void cerrarAlquiler(Cliente cliente, Vehiculo vehiculo);
 
-	Alquiler[] obtenerAlquileres();
+	List<Alquiler> obtenerAlquileres();
 	
 	void leerClientes();
 
@@ -45,5 +45,7 @@ public interface IModeloAlquilerVehiculos {
 	void escribirAlquileres();
 
 	void leerAlquileres();
+	
+	 List<Alquiler> obtenerAlquileresAbiertos();
 	
 }

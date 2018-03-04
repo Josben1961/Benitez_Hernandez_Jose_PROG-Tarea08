@@ -34,7 +34,9 @@ public interface IControladorAlquilerVehiculos {
 
 	void cerrarAlquiler( Cliente cliente, Vehiculo vehiculo);
 
-	Alquiler[] obtenerAlquileres();
+	List<Alquiler> obtenerAlquileres();
+
+	List<Alquiler> obtenerAlquileresAbiertos();
 
 
 }

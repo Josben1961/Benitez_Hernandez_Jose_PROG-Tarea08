@@ -9,6 +9,7 @@ import alquilerVehiculos.mvc.modelo.dao.Alquileres;
 import alquilerVehiculos.mvc.modelo.dao.Vehiculos;
 import alquilerVehiculos.mvc.modelo.dominio.Alquiler;
 import alquilerVehiculos.mvc.modelo.dominio.Cliente;
+import alquilerVehiculos.mvc.modelo.dominio.ExcepcionAlquilerVehiculos;
 import alquilerVehiculos.mvc.modelo.dominio.vehiculo.TipoVehiculo;
 import alquilerVehiculos.mvc.modelo.dominio.vehiculo.Vehiculo;
 
@@ -55,19 +56,28 @@ public class ModeloAlquilerVehiculos implements IModeloAlquilerVehiculos {
 		return vehiculos.buscarVehiculo(matricula);
 	}
 
-	public Vehiculo[] obtenerVehiculos() {
+	@Override
+	public List<Vehiculo> obtenerVehiculos() {
 		return vehiculos.getVehiculos();
 	}
 
 	public void abrirAlquiler(Cliente cliente, Vehiculo vehiculo) {
+		comprobarExistenciaVehiculo(vehiculo);
 		alquileres.abrirAlquiler(cliente, vehiculo);
+	}
+	
+	private void comprobarExistenciaVehiculo(Vehiculo vehiculo) {
+		if (vehiculos.buscarVehiculo(vehiculo.getMatricula()) == null)
+			throw new ExcepcionAlquilerVehiculos("El vehículo no existe");
 	}
 
 	public void cerrarAlquiler(Cliente cliente, Vehiculo vehiculo) {
+		comprobarExistenciaVehiculo(vehiculo);
 		alquileres.cerrarAlquiler(cliente, vehiculo);
 	}
 
-	public Alquiler[] obtenerAlquileres() {
+	@Override
+	public List<Alquiler> obtenerAlquileres() {
 		return alquileres.getAlquileres();
 	}
 
@@ -98,8 +108,12 @@ public class ModeloAlquilerVehiculos implements IModeloAlquilerVehiculos {
 
 	@Override
 	public void escribirAlquileres() {
-		alquileres.escribirAlquileres();
-		;
+		alquileres.escribirAlquileres();	
+	}
+	
+	 @Override
+	    public List<Alquiler> obtenerAlquileresAbiertos() {
+	        return alquileres.obtenerAlquileresAbiertos();
 	}
 
 }
