@@ -3,56 +3,47 @@ package alquilerVehiculos.mvc.modelo.dao;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.EOFException;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.List;
+import java.util.Vector;
 import alquilerVehiculos.mvc.modelo.dominio.Alquiler;
 import alquilerVehiculos.mvc.modelo.dominio.Cliente;
 import alquilerVehiculos.mvc.modelo.dominio.ExcepcionAlquilerVehiculos;
 import alquilerVehiculos.mvc.modelo.dominio.vehiculo.Vehiculo;
 
-// TODO: Auto-generated Javadoc
-/**
- * La Clase Alquileres para gestión de los alquileres
- */
+
 public class Alquileres {
 
-	private Alquiler[] alquileres;
-
-	private final int MAX_ALQUILERES = 10;
-
+	private List<Alquiler> alquileres;
 	private final String FICHERO_ALQUILERES = "datos/alquileres.dat";
 	
-	/**
-	 * Instancia de nuevos alquileres.
-	 */
 	public Alquileres() {
-		alquileres = new Alquiler[MAX_ALQUILERES];
-	}
-
-	/**
-	 * Gets the alquileres.
-	 *
-	 * @return the alquileres
-	 */
-	public Alquiler[] getAlquileres() {
-		return alquileres.clone();
+		alquileres = new Vector<Alquiler>();
 	}
 	
-	/**
-	 * Leer alquileres.
-	 */
+	public List<Alquiler> getAlquileres() {
+		return new Vector<Alquiler>(alquileres);
+	}
+	
 	public void leerAlquileres() {
 		File fichero = new File(FICHERO_ALQUILERES);
 		ObjectInputStream entrada;
 		try {
 			entrada = new ObjectInputStream(new FileInputStream(fichero));
 			try {
-				alquileres = (Alquiler[])entrada.readObject();
+				while (true) {
+					Alquiler alquiler = (Alquiler) entrada.readObject();
+					alquileres.add(alquiler);
+				}
+				
+			} catch (EOFException eo) {
 				entrada.close();
-				System.out.println(" Fichero alquileres leído correctamente.");
+				System.out.println("Fichero trabajos leído satisfactoriamente.");	
 			} catch (ClassNotFoundException e) {
 				System.out.println("No puedo encontrar la clase que tengo que leer.");
 			} catch (IOException e) {
@@ -62,15 +53,13 @@ public class Alquileres {
 			System.out.println("Imposible abrir el fihero de alquileres.");
 		}
 	}
-	
-	/**
-	 * Escribir alquileres.
-	 */
+
 	public void escribirAlquileres() {
 		File fichero = new File(FICHERO_ALQUILERES);
 		try {
 			ObjectOutputStream salida = new ObjectOutputStream(new FileOutputStream(fichero));
-			salida.writeObject((Alquiler[])alquileres);
+			for (Alquiler alquiler : alquileres)
+				salida.writeObject(alquiler);
 			salida.close();
 			System.out.println("Fichero alquileres escrito correctamente ");
 		} catch (FileNotFoundException e) {
@@ -80,74 +69,47 @@ public class Alquileres {
 		}
 	}
 
-	/**
-	 * Abrir alquiler.
-	 *
-	 * @param cliente 
-	 * @param vehiculo 
-	 */
 	public void abrirAlquiler(Cliente cliente, Vehiculo vehiculo) {
-		int indice = buscarPrimerIndiceLibreComprobandoExistenciaOtroAbierto(vehiculo);
-		if (indiceNoSuperaTamano(indice))
-			alquileres[indice] = new Alquiler(cliente, vehiculo);
-		else
-			throw new ExcepcionAlquilerVehiculos("El array de alquileres está lleno.");
+		compruebaExistenciaOtroAbierto(cliente, vehiculo);
+		 alquileres.add(new Alquiler (cliente, vehiculo));
 	}
 
-	private int buscarPrimerIndiceLibreComprobandoExistenciaOtroAbierto(Vehiculo vehiculo) {
+	private void compruebaExistenciaOtroAbierto(Cliente cliente, Vehiculo vehiculo) {
 		int indice = 0;
-		boolean encontrado = false;
-		while (indiceNoSuperaTamano(indice) && !encontrado) {
-			if (alquileres[indice] == null)
-				encontrado = true;
-			else if (alquileres[indice].getVehiculo().getMatricula().equals(vehiculo.getMatricula())
-					&& !alquileres[indice].getVehiculo().getDisponible())
-				throw new ExcepcionAlquilerVehiculos("Ya existe un alquiler abierto para este vehículo");
+		while (indiceNoSuperaTamano(indice)) {
+			if (alquileres.get(indice).getVehiculo().getMatricula().equals(vehiculo.getMatricula()) && 
+					alquileres.get(indice).getDias()==0)
+				throw new ExcepcionAlquilerVehiculos("Ya existe un trabajo abierto para este vehículo");
 			else
 				indice++;
 		}
-		return indice;
 	}
 
 	private boolean indiceNoSuperaTamano(int indice) {
-		return indice < alquileres.length;
+		return indice < alquileres.size();
 	}
 
-	/**
-	 * Cerrar alquiler.
-	 *
-	 * @param cliente the cliente
-	 * @param vehiculo the vehiculo
-	 */
 	public void cerrarAlquiler(Cliente cliente, Vehiculo vehiculo) {
 		int indice = buscarAlquilerAbierto(cliente, vehiculo);
 		if (indiceNoSuperaTamano(indice)) {
-			alquileres[indice].cerrar();
+			alquileres.get(indice).cerrar();
 			vehiculo.setDisponible(true);
 		} else {
 			throw new ExcepcionAlquilerVehiculos("No hay ningún alquiler abierto para ese vehículo");
 		}
 	}
 
-	/**
-	 * Método para buscar alquiler abierto.
-	 *
-	 * @param cliente 
-	 * @param vehiculo 
-	 * @return indice
-	 */
 	private int buscarAlquilerAbierto(Cliente cliente, Vehiculo vehiculo) {
 		int indice = 0;
 		boolean alquilerEncontrado = false;
 		while (indiceNoSuperaTamano(indice) && !alquilerEncontrado) {
-			if (alquileres[indice] != null
-					&& alquileres[indice].getVehiculo().getMatricula().equals(vehiculo.getMatricula())
-					&& alquileres[indice].getDias() == 0)
+			if (alquileres.get(indice).getVehiculo().getMatricula().equals(vehiculo.getMatricula()) &&
+					alquileres.get(indice).getDias()!=0)
 				alquilerEncontrado = true;
 			else
 				indice++;
 		}
-		return indice;
+		return alquilerEncontrado ? indice : alquileres.size();
 	}
 
 }
