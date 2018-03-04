@@ -13,7 +13,6 @@ import alquilerVehiculos.mvc.modelo.dominio.Alquiler;
 
 public class ControladorAlquilerVehiculos implements IControladorAlquilerVehiculos {
 
-
 	private IModeloAlquilerVehiculos modelo;
 	private IVistaAlquilerVehiculos vista;
 
@@ -47,16 +46,16 @@ public class ControladorAlquilerVehiculos implements IControladorAlquilerVehicul
 	public Cliente buscarCliente(String dni) {
 		return modelo.buscarCliente(dni);
 	}
-	
+
 	@Override
 	public List<Cliente> obtenerClientes() {
 		return modelo.obtenerClientes();
 	}
-	
+
 	public void anadirVehiculo(Vehiculo vehiculo, TipoVehiculo tipoVehiculo) {
 		modelo.anadirVehiculo(vehiculo, tipoVehiculo);
 	}
-	
+
 	public void borrarVehiculo(String matricula) {
 		modelo.borrarVehiculo(matricula);
 	}
@@ -83,10 +82,14 @@ public class ControladorAlquilerVehiculos implements IControladorAlquilerVehicul
 	public List<Alquiler> obtenerAlquileres() {
 		return modelo.obtenerAlquileres();
 	}
-	
-	 @Override
-	    public List<Alquiler> obtenerAlquileresAbiertos() {
-	        return modelo.obtenerAlquileresAbiertos();
-	}
 
+	@Override
+	public List<Alquiler> obtenerAlquileresAbiertos() {
+		return modelo.obtenerAlquileresAbiertos();
+	}
+	
+	   @Override
+	    public List<Alquiler> obtenerAlquileresCliente(String dni) {
+	        return modelo.obtenerAlquileresCliente(dni);
+	}
 }

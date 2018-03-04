@@ -46,6 +46,8 @@ public interface IModeloAlquilerVehiculos {
 
 	void leerAlquileres();
 	
-	 List<Alquiler> obtenerAlquileresAbiertos();
+	List<Alquiler> obtenerAlquileresAbiertos();
+	 
+	List<Alquiler> obtenerAlquileresCliente(String dni);
 	
 }
